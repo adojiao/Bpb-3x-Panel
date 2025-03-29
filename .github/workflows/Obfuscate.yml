@@ -36,7 +36,7 @@ jobs:
         run: |
           javascript-obfuscator origin.js --output _worker.js \
           #--compact true \
-          --control-flow-flattening true \
+          #--control-flow-flattening true \
           #--control-flow-flattening true \
           #--control-flow-flattening-threshold 1 \
           #--dead-code-injection true \
