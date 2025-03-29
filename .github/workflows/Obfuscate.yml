@@ -35,19 +35,19 @@ jobs:
       - name: Obfuscate BPB worker js
         run: |
           javascript-obfuscator origin.js --output _worker.js \
-          --compact true \
-          --control-flow-flattening true \
-          --control-flow-flattening-threshold 0.5 \  # 降低阈值
-          --dead-code-injection false \             # 关闭死代码注入
-          --identifier-names-generator hexadecimal \
-          --rename-globals false \                 # 关闭全局变量重命名
-          --string-array true \
-          --string-array-encoding 'base64' \        # 使用 base64 编码
-          --string-array-threshold 1 \
-          --transform-object-keys false \           # 关闭对象键重写
-          --unicode-escape-sequence false \         # 关闭 Unicode 转义
-          --reserved-names 'window,exports' \       # 保留关键全局名称
-          --reserved-strings '/api/,/auth/'         # 保留敏感路径
+  --compact true \
+  --control-flow-flattening true \
+  --control-flow-flattening-threshold 0.5 \
+  --dead-code-injection false \
+  --identifier-names-generator hexadecimal \
+  --rename-globals false \
+  --string-array true \
+  --string-array-encoding base64 \
+  --string-array-threshold 1 \
+  --transform-object-keys false \
+  --unicode-escape-sequence false \
+  --reserved-names "window,exports" \
+  --reserved-strings "/api/,/auth/"
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
