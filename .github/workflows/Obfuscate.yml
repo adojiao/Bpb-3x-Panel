@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 17 1,15 * *"  # UTC 时间每周日 17:00（对应北京时间周一 1:00）
+    - cron: "0 17 * * 2,4,6"  # UTC 时间每周日 17:00（对应北京时间周一 1:00）
      # timezone: "Asia/Shanghai"  # 时区字段直接关联 cron 条目
 
 permissions:
@@ -30,21 +30,24 @@ jobs:
 
       - name: Clone BPB workjs
         run: |
-          wget -O origin.js https://raw.githubusercontent.com/bia-pain-bache/BPB-Worker-Panel/refs/heads/main/build/unobfuscated-worker.js
+          wget -O origin.js https://raw.githubusercontent.com/adojiao/BPB-Worker-Panel/refs/heads/main/build/unobfuscated-worker.js
 
       - name: Obfuscate BPB worker js
         run: |
           javascript-obfuscator origin.js --output _worker.js \
           --compact true \
+          --control-flow-flattening true \
+          --control-flow-flattening-threshold 0.5 \
+          --dead-code-injection false \
           --identifier-names-generator hexadecimal \
-          --rename-globals true \
+          --rename-globals false \
           --string-array true \
-          --string-array-encoding 'base64' \
-          --string-array-threshold 0.75 \
-          --transform-object-keys true \
-          --self-defending false \
-          --simplify true
-
+          --string-array-encoding base64 \
+          --string-array-threshold 1 \
+          --transform-object-keys false \
+          --unicode-escape-sequence false \
+          --reserved-names "window,exports" \
+          --reserved-strings "/api/,/auth/"
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
