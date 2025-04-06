@@ -36,18 +36,14 @@ jobs:
         run: |
           javascript-obfuscator origin.js --output _worker.js \
           --compact true \
-          --control-flow-flattening true \
-          --control-flow-flattening-threshold 0.5 \
-          --dead-code-injection false \
           --identifier-names-generator hexadecimal \
-          --rename-globals false \
+          --rename-globals true \
           --string-array true \
-          --string-array-encoding base64 \
-          --string-array-threshold 1 \
-          --transform-object-keys false \
-          --unicode-escape-sequence false \
-          --reserved-names "window,exports" \
-          --reserved-strings "/api/,/auth/"
+          --string-array-encoding 'base64' \
+          --string-array-threshold 0.75 \
+          --transform-object-keys true \
+          --self-defending false \
+          --simplify true
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
